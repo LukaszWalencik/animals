@@ -1,16 +1,12 @@
-import 'package:animals/data/animal_data_sources.dart';
-import 'package:animals/model/animal_model.dart';
+import 'package:animals/data/animals_data_sources.dart';
+import 'package:animals/model/animals_model.dart';
 
-class AnimalRepository {
-  final AnimalRemoteDataSource _animalRemoteDataSource;
+class AnimalsRepository {
+  AnimalsRepository(this._animalsRemoteDataSource);
 
-  AnimalRepository(this._animalRemoteDataSource);
+  final AnimalsRemoteDataSource _animalsRemoteDataSource;
 
-  Future<AnimalModel?> getAnimalModel() async {
-    final getterAnimalModel = await _animalRemoteDataSource.getAnimal();
-    if (getterAnimalModel == null) {
-      return null;
-    }
-    return AnimalModel.fromJson(getterAnimalModel);
+  Future<List<AnimalsModel>> getAnimalsModel() async {
+    return _animalsRemoteDataSource.getAnimals();
   }
 }

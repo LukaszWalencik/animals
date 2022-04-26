@@ -1,10 +1,10 @@
 part of 'animals_cubit.dart';
 
-class AnimalsState {
+class AnimalState {
   final AnimalModel? animalModel;
   final Status status;
   final String? errorMessage;
 
-  AnimalsState(
+  AnimalState(
       {this.animalModel, this.status = Status.initial, this.errorMessage});
 }
