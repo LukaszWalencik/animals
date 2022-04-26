@@ -1,0 +1,29 @@
+import 'package:flutter/material.dart';
+
+class AppTypography {
+  static const h1 = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    height: 1.33,
+  );
+  static const h2 = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    height: 1.4,
+  );
+  static const body1 = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    height: 1.5,
+  );
+  static const body2 = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+    height: 1.5,
+  );
+  static const caption = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.normal,
+    height: 1.33,
+  );
+}
