@@ -20,19 +20,33 @@ AnimalsModel _$AnimalsModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AnimalsModel {
+  @HiveField(0)
   String get name => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get latinName => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get animalType => throw _privateConstructorUsedError;
+  @HiveField(3)
   String get activeTime => throw _privateConstructorUsedError;
+  @HiveField(4)
   String get lengthMin => throw _privateConstructorUsedError;
+  @HiveField(5)
   String get lengthMax => throw _privateConstructorUsedError;
+  @HiveField(6)
   String get weightMin => throw _privateConstructorUsedError;
+  @HiveField(7)
   String get weightMax => throw _privateConstructorUsedError;
+  @HiveField(8)
   String get lifespan => throw _privateConstructorUsedError;
+  @HiveField(9)
   String get habitat => throw _privateConstructorUsedError;
+  @HiveField(10)
   String get diet => throw _privateConstructorUsedError;
+  @HiveField(11)
   String get geoRange => throw _privateConstructorUsedError;
+  @HiveField(12)
   String get imageLink => throw _privateConstructorUsedError;
+  @HiveField(13)
   int get id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,20 +61,20 @@ abstract class $AnimalsModelCopyWith<$Res> {
           AnimalsModel value, $Res Function(AnimalsModel) then) =
       _$AnimalsModelCopyWithImpl<$Res>;
   $Res call(
-      {String name,
-      String latinName,
-      String animalType,
-      String activeTime,
-      String lengthMin,
-      String lengthMax,
-      String weightMin,
-      String weightMax,
-      String lifespan,
-      String habitat,
-      String diet,
-      String geoRange,
-      String imageLink,
-      int id});
+      {@HiveField(0) String name,
+      @HiveField(1) String latinName,
+      @HiveField(2) String animalType,
+      @HiveField(3) String activeTime,
+      @HiveField(4) String lengthMin,
+      @HiveField(5) String lengthMax,
+      @HiveField(6) String weightMin,
+      @HiveField(7) String weightMax,
+      @HiveField(8) String lifespan,
+      @HiveField(9) String habitat,
+      @HiveField(10) String diet,
+      @HiveField(11) String geoRange,
+      @HiveField(12) String imageLink,
+      @HiveField(13) int id});
 }
 
 /// @nodoc
@@ -157,20 +171,20 @@ abstract class _$AnimalsModelCopyWith<$Res>
       __$AnimalsModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String name,
-      String latinName,
-      String animalType,
-      String activeTime,
-      String lengthMin,
-      String lengthMax,
-      String weightMin,
-      String weightMax,
-      String lifespan,
-      String habitat,
-      String diet,
-      String geoRange,
-      String imageLink,
-      int id});
+      {@HiveField(0) String name,
+      @HiveField(1) String latinName,
+      @HiveField(2) String animalType,
+      @HiveField(3) String activeTime,
+      @HiveField(4) String lengthMin,
+      @HiveField(5) String lengthMax,
+      @HiveField(6) String weightMin,
+      @HiveField(7) String weightMax,
+      @HiveField(8) String lifespan,
+      @HiveField(9) String habitat,
+      @HiveField(10) String diet,
+      @HiveField(11) String geoRange,
+      @HiveField(12) String imageLink,
+      @HiveField(13) int id});
 }
 
 /// @nodoc
@@ -266,51 +280,65 @@ class __$AnimalsModelCopyWithImpl<$Res> extends _$AnimalsModelCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$_AnimalsModel with DiagnosticableTreeMixin implements _AnimalsModel {
   const _$_AnimalsModel(
-      {required this.name,
-      required this.latinName,
-      required this.animalType,
-      required this.activeTime,
-      required this.lengthMin,
-      required this.lengthMax,
-      required this.weightMin,
-      required this.weightMax,
-      required this.lifespan,
-      required this.habitat,
-      required this.diet,
-      required this.geoRange,
-      required this.imageLink,
-      required this.id});
+      {@HiveField(0) required this.name,
+      @HiveField(1) required this.latinName,
+      @HiveField(2) required this.animalType,
+      @HiveField(3) required this.activeTime,
+      @HiveField(4) required this.lengthMin,
+      @HiveField(5) required this.lengthMax,
+      @HiveField(6) required this.weightMin,
+      @HiveField(7) required this.weightMax,
+      @HiveField(8) required this.lifespan,
+      @HiveField(9) required this.habitat,
+      @HiveField(10) required this.diet,
+      @HiveField(11) required this.geoRange,
+      @HiveField(12) required this.imageLink,
+      @HiveField(13) required this.id});
 
   factory _$_AnimalsModel.fromJson(Map<String, dynamic> json) =>
       _$$_AnimalsModelFromJson(json);
 
   @override
+  @HiveField(0)
   final String name;
   @override
+  @HiveField(1)
   final String latinName;
   @override
+  @HiveField(2)
   final String animalType;
   @override
+  @HiveField(3)
   final String activeTime;
   @override
+  @HiveField(4)
   final String lengthMin;
   @override
+  @HiveField(5)
   final String lengthMax;
   @override
+  @HiveField(6)
   final String weightMin;
   @override
+  @HiveField(7)
   final String weightMax;
   @override
+  @HiveField(8)
   final String lifespan;
   @override
+  @HiveField(9)
   final String habitat;
   @override
+  @HiveField(10)
   final String diet;
   @override
+  @HiveField(11)
   final String geoRange;
   @override
+  @HiveField(12)
   final String imageLink;
   @override
+  @HiveField(13)
   final int id;
 
   @override
@@ -394,51 +422,65 @@ class _$_AnimalsModel with DiagnosticableTreeMixin implements _AnimalsModel {
 
 abstract class _AnimalsModel implements AnimalsModel {
   const factory _AnimalsModel(
-      {required final String name,
-      required final String latinName,
-      required final String animalType,
-      required final String activeTime,
-      required final String lengthMin,
-      required final String lengthMax,
-      required final String weightMin,
-      required final String weightMax,
-      required final String lifespan,
-      required final String habitat,
-      required final String diet,
-      required final String geoRange,
-      required final String imageLink,
-      required final int id}) = _$_AnimalsModel;
+      {@HiveField(0) required final String name,
+      @HiveField(1) required final String latinName,
+      @HiveField(2) required final String animalType,
+      @HiveField(3) required final String activeTime,
+      @HiveField(4) required final String lengthMin,
+      @HiveField(5) required final String lengthMax,
+      @HiveField(6) required final String weightMin,
+      @HiveField(7) required final String weightMax,
+      @HiveField(8) required final String lifespan,
+      @HiveField(9) required final String habitat,
+      @HiveField(10) required final String diet,
+      @HiveField(11) required final String geoRange,
+      @HiveField(12) required final String imageLink,
+      @HiveField(13) required final int id}) = _$_AnimalsModel;
 
   factory _AnimalsModel.fromJson(Map<String, dynamic> json) =
       _$_AnimalsModel.fromJson;
 
   @override
+  @HiveField(0)
   String get name => throw _privateConstructorUsedError;
   @override
+  @HiveField(1)
   String get latinName => throw _privateConstructorUsedError;
   @override
+  @HiveField(2)
   String get animalType => throw _privateConstructorUsedError;
   @override
+  @HiveField(3)
   String get activeTime => throw _privateConstructorUsedError;
   @override
+  @HiveField(4)
   String get lengthMin => throw _privateConstructorUsedError;
   @override
+  @HiveField(5)
   String get lengthMax => throw _privateConstructorUsedError;
   @override
+  @HiveField(6)
   String get weightMin => throw _privateConstructorUsedError;
   @override
+  @HiveField(7)
   String get weightMax => throw _privateConstructorUsedError;
   @override
+  @HiveField(8)
   String get lifespan => throw _privateConstructorUsedError;
   @override
+  @HiveField(9)
   String get habitat => throw _privateConstructorUsedError;
   @override
+  @HiveField(10)
   String get diet => throw _privateConstructorUsedError;
   @override
+  @HiveField(11)
   String get geoRange => throw _privateConstructorUsedError;
   @override
+  @HiveField(12)
   String get imageLink => throw _privateConstructorUsedError;
   @override
+  @HiveField(13)
   int get id => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
