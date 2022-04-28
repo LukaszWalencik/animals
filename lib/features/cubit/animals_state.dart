@@ -1,7 +1,7 @@
 part of 'animals_cubit.dart';
 
 class AnimalState {
-  final AnimalModel? animalModel;
+  final AnimalsModel? animalModel;
   final Status status;
   final String? errorMessage;
 

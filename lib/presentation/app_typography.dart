@@ -11,16 +11,27 @@ class AppTypography {
     fontWeight: FontWeight.bold,
     height: 1.4,
   );
+  static const h3 = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    height: 1.4,
+  );
   static const body1 = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.bold,
     height: 1.5,
   );
-  static const body2 = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.normal,
+  static const body2bold = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
     height: 1.5,
   );
+  static const body3bold = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+    height: 1.5,
+  );
+
   static const caption = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.normal,

@@ -1,18 +1,18 @@
-import 'package:animals/model/animal_model.dart';
+import 'package:animals/model/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:flutter/material.dart';
 
-Row LenghtMaximum(AnimalModel animalModel) {
+Row lenghtMaximum(AnimalsModel animalsModel) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Text(
+      const Text(
         'Lenght maximum:',
-        style: AppTypography.body1,
+        style: AppTypography.body2bold,
       ),
       Text(
-        animalModel.lengthMax.toString(),
-        style: AppTypography.body1,
+        animalsModel.lengthMax.toString(),
+        style: AppTypography.body2bold,
       ),
     ],
   );

@@ -1,18 +1,18 @@
-import 'package:animals/model/animal_model.dart';
+import 'package:animals/model/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:flutter/material.dart';
 
-Row LatinName(AnimalModel animalModel) {
+Row latinName(AnimalsModel animalsModel) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Text(
+      const Text(
         'Latin name:',
-        style: AppTypography.body1,
+        style: AppTypography.body2bold,
       ),
       Text(
-        animalModel.latinName.toString(),
-        style: AppTypography.body1,
+        animalsModel.latinName.toString(),
+        style: AppTypography.body2bold,
       ),
     ],
   );

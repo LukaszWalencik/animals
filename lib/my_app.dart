@@ -1,4 +1,3 @@
-import 'package:animals/features/home_page/home_screen.dart';
 import 'package:animals/features/list_page.dart/list_page.dart';
 import 'package:flutter/material.dart';
 

@@ -1,8 +1,11 @@
 import 'package:animals/core/enums.dart';
 import 'package:animals/data/animals_data_sources.dart';
 import 'package:animals/features/list_page.dart/cubit/animals_cubit.dart';
+import 'package:animals/features/list_page.dart/widgets/animal_card.dart';
 import 'package:animals/presentation/app_typography.dart';
+import 'package:animals/presentation/colors.dart';
 import 'package:animals/presentation/dimens.dart';
+import 'package:animals/presentation/radius.dart';
 import 'package:animals/repository/animals_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +33,7 @@ class HomeListPage extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(errorMessage),
-                backgroundColor: Colors.red,
+                backgroundColor: AppColors.errorColor,
               ),
             );
           }
@@ -38,17 +41,22 @@ class HomeListPage extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.purple,
+              backgroundColor: AppColors.mainColor,
               actions: [
                 IconButton(
-                    padding: EdgeInsets.fromLTRB(8, 8, 20, 8),
+                    padding: const EdgeInsets.fromLTRB(
+                      AppDimens.s,
+                      AppDimens.s,
+                      AppDimens.ms,
+                      AppDimens.s,
+                    ),
                     iconSize: 35,
                     onPressed: () {
                       context.read<AnimalsCubit>().getAnimalsModel();
                     },
-                    icon: Icon(Icons.refresh))
+                    icon: const Icon(Icons.refresh))
               ],
-              title: Text(
+              title: const Text(
                 'Read something about animals!',
                 style: AppTypography.h2,
               ),
@@ -57,56 +65,76 @@ class HomeListPage extends StatelessWidget {
               child: Builder(
                 builder: (context) {
                   if (state.status == Status.loading) {
-                    return const Text('Loading');
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Loading Knowledge!!',
+                          style: AppTypography.h2,
+                        ),
+                        SizedBox(height: AppDimens.l),
+                        CircularProgressIndicator(),
+                      ],
+                    );
+                  }
+                  if (state.status == Status.error) {
+                    return const Text("Sorry, something went wrong ='(");
                   }
                   return Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(AppDimens.s),
                     child: ListView(
                       children: [
                         for (final animals in state.animalsModel)
                           //  AnimalCard(animalModel)
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black12,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
-                                border: Border.all(
-                                  width: 3,
-                                  color: Colors.black,
-                                  style: BorderStyle.solid,
+                            padding: const EdgeInsets.only(bottom: AppRadius.s),
+                            child: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return animalCard(animals, context);
+                                  },
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.listElementBlack,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(AppRadius.ms)),
+                                  border: Border.all(
+                                    width: 3,
+                                    color: AppColors.black,
+                                    style: BorderStyle.solid,
+                                  ),
                                 ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(Dimens.s),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Image.network(
-                                      animals.imageLink.toString(),
-                                      width: 150,
-                                      height: 150,
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              'Name:',
-                                              style: AppTypography.h2,
-                                            ),
-                                            Text(
-                                              animals.name.toString(),
-                                              style: AppTypography.h2,
-                                            ),
-                                          ],
-                                        ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(AppDimens.s),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Image.network(
+                                        animals.imageLink.toString(),
+                                        width: 150,
+                                        height: 150,
                                       ),
-                                    )
-                                  ],
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.all(AppDimens.s),
+                                          child: Column(
+                                            children: [
+                                              const Text('Name:',
+                                                  style: AppTypography.h2),
+                                              Text(animals.name.toString(),
+                                                  style: AppTypography.h2),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

@@ -1,23 +1,24 @@
 import 'package:animals/core/enums.dart';
-import 'package:animals/model/animal_model.dart';
-import 'package:animals/repository/animal_repository.dart';
+import 'package:animals/features/list_page.dart/cubit/animals_cubit.dart';
+import 'package:animals/model/animals_model.dart';
+import 'package:animals/repository/animals_repository.dart';
 import 'package:bloc/bloc.dart';
 
 part 'animals_state.dart';
 
-class AnimalCubit extends Cubit<AnimalState> {
-  AnimalCubit(this._animalRepository) : super(AnimalState());
+class AnimalsCubit extends Cubit<AnimalsState> {
+  AnimalsCubit(this._animalRepository) : super(AnimalsState());
 
-  final AnimalRepository _animalRepository;
+  final AnimalsRepository _animalRepository;
 
   Future<void> getAnimalModel() async {
-    emit(AnimalState(status: Status.loading));
+    emit(AnimalsState(status: Status.loading));
 
     try {
-      final animalModel = await _animalRepository.getAnimalModel();
-      emit(AnimalState(animalModel: animalModel, status: Status.success));
+      final animalModel = await _animalRepository.getAnimalsModel();
+      emit(AnimalsState(animalsModel: animalModel, status: Status.success));
     } catch (error) {
-      emit(AnimalState(status: Status.error, errorMessage: 'Błąd'));
+      emit(AnimalsState(status: Status.error, errorMessage: 'Błąd'));
     }
   }
 }

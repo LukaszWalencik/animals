@@ -1,18 +1,18 @@
-import 'package:animals/model/animal_model.dart';
+import 'package:animals/model/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:flutter/material.dart';
 
-Row LenghtMinimum(AnimalModel animalModel) {
+Row lenghtMinimum(AnimalsModel animalsModel) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Text(
+      const Text(
         'Lenght minimum:',
-        style: AppTypography.body1,
+        style: AppTypography.body2bold,
       ),
       Text(
-        animalModel.lengthMin.toString(),
-        style: AppTypography.body1,
+        animalsModel.lengthMin.toString(),
+        style: AppTypography.body2bold,
       ),
     ],
   );

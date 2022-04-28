@@ -1,18 +1,18 @@
-import 'package:animals/model/animal_model.dart';
+import 'package:animals/model/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:flutter/material.dart';
 
-Column Diet(AnimalModel animalModel) {
+Column diet(AnimalsModel animalsModel) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Text(
+      const Text(
         'Diet:',
-        style: AppTypography.body1,
+        style: AppTypography.body2bold,
       ),
       Text(
-        animalModel.diet.toString(),
-        style: AppTypography.body1,
+        animalsModel.diet.toString(),
+        style: AppTypography.body2bold,
       ),
     ],
   );
