@@ -10,6 +10,7 @@ import 'package:animals/repository/animals_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeListPage extends StatelessWidget {
   const HomeListPage({
@@ -29,10 +30,9 @@ class HomeListPage extends StatelessWidget {
       child: BlocConsumer<AnimalsCubit, AnimalsState>(
         listener: (context, state) {
           if (state.status == Status.error) {
-            final errorMessage = state.errorMessage ?? 'Unkown error';
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(errorMessage),
+              const SnackBar(
+                content: Text("Sorry, something went wrong ='("),
                 backgroundColor: AppColors.errorColor,
               ),
             );
@@ -53,6 +53,7 @@ class HomeListPage extends StatelessWidget {
                     iconSize: 35,
                     onPressed: () {
                       context.read<AnimalsCubit>().getAnimalsModel();
+                      ;
                     },
                     icon: const Icon(Icons.refresh))
               ],
@@ -77,14 +78,12 @@ class HomeListPage extends StatelessWidget {
                       ],
                     );
                   }
-                  if (state.status == Status.error) {
-                    return const Text("Sorry, something went wrong ='(");
-                  }
                   return Padding(
                     padding: const EdgeInsets.all(AppDimens.s),
                     child: ListView(
                       children: [
                         for (final animals in state.animalsModel)
+
                           //  AnimalCard(animalModel)
                           Padding(
                             padding: const EdgeInsets.only(bottom: AppRadius.s),
