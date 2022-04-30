@@ -17,6 +17,8 @@ class HomeListPage extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   final animalcontroller = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -39,133 +41,134 @@ class HomeListPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: AppColors.mainColor,
-              centerTitle: true,
-              title: const Text(
-                'Read something about animals!',
-                style: AppTypography.h2,
+          return Form(
+            key: _formKey,
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: AppColors.mainColor,
+                centerTitle: true,
+                title: const Text(
+                  'Read something about animals!',
+                  style: AppTypography.h2,
+                ),
               ),
-            ),
-            body: Center(
-              child: Builder(
-                builder: (context) {
-                  if (state.status == Status.loading) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          'Loading Knowledge!!',
-                          style: AppTypography.h2,
-                        ),
-                        SizedBox(height: AppDimens.l),
-                        CircularProgressIndicator(),
-                      ],
-                    );
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.all(AppDimens.s),
-                    child: Column(
-                      children: [
-                        Text('Write how many animals you want to search!'),
-                        TextField(
-                          controller: animalcontroller,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "Write number between 1-9",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12)),
+              body: Center(
+                child: Builder(
+                  builder: (context) {
+                    if (state.status == Status.loading) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Loading Knowledge!!',
+                            style: AppTypography.h2,
                           ),
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              if (animalcontroller == null) {
-                                return null;
-                              }
-
-                              final animalNumber =
-                                  int.parse(animalcontroller.text);
-                              context
-                                  .read<AnimalsCubit>()
-                                  .getAnimalsModel(animalNumber);
-                              animalcontroller.clear();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: AppColors.mainColor,
+                          SizedBox(height: AppDimens.l),
+                          CircularProgressIndicator(),
+                        ],
+                      );
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.all(AppDimens.s),
+                      child: Expanded(
+                        child: ListView(
+                          children: [
+                            Text('Write how many animals you want to search!'),
+                            TextField(
+                              maxLength: 1,
+                              controller: animalcontroller,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: "Write number between 1-9",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                              ),
                             ),
-                            child: Text('Go!')),
-                        Expanded(
-                          child: ListView(
-                            children: [
-                              for (final animals in state.animalsModel)
-
-                                //  AnimalCard(animalModel)
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: AppRadius.s),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return animalCard(animals, context);
-                                        },
-                                      );
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: AppColors.listElementBlack,
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(AppRadius.ms)),
-                                        border: Border.all(
-                                          width: 3,
-                                          color: AppColors.black,
-                                          style: BorderStyle.solid,
-                                        ),
+                            ElevatedButton(
+                                onPressed: () {
+                                  final animalNumber =
+                                      int.parse(animalcontroller.text);
+                                  if (animalNumber != 0) {
+                                    context
+                                        .read<AnimalsCubit>()
+                                        .getAnimalsModel(animalNumber);
+                                    animalcontroller.clear();
+                                  } else
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content:
+                                            Text('Value must be between 1-9'),
                                       ),
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.all(AppDimens.s),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Image.network(
-                                              animals.imageLink.toString(),
-                                              width: 150,
-                                              height: 150,
-                                            ),
-                                            Expanded(
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(
-                                                    AppDimens.s),
-                                                child: Column(
-                                                  children: [
-                                                    const Text('Name:',
-                                                        style:
-                                                            AppTypography.h2),
-                                                    Text(
-                                                        animals.name.toString(),
-                                                        style:
-                                                            AppTypography.h2),
-                                                  ],
-                                                ),
+                                    );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: AppColors.mainColor,
+                                ),
+                                child: Text('Go!')),
+                            for (final animals in state.animalsModel)
+
+                              //  AnimalCard(animalModel)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(bottom: AppRadius.s),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return animalCard(animals, context);
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.listElementBlack,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(AppRadius.ms)),
+                                      border: Border.all(
+                                        width: 3,
+                                        color: AppColors.black,
+                                        style: BorderStyle.solid,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.all(AppDimens.s),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Image.network(
+                                            animals.imageLink.toString(),
+                                            width: 150,
+                                            height: 150,
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(
+                                                  AppDimens.s),
+                                              child: Column(
+                                                children: [
+                                                  const Text('Name:',
+                                                      style: AppTypography.h2),
+                                                  Text(animals.name.toString(),
+                                                      style: AppTypography.h2),
+                                                ],
                                               ),
-                                            )
-                                          ],
-                                        ),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
                                   ),
                                 ),
-                            ],
-                          ),
+                              ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                },
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           );
