@@ -6,7 +6,8 @@ class AnimalsRepository {
 
   final AnimalsRemoteDataSource _animalsRemoteDataSource;
 
-  Future<List<AnimalsModel>> getAnimalsModel() async {
-    return _animalsRemoteDataSource.getAnimals();
+  Future<List<AnimalsModel>> getAnimalsModel(
+      {required int animalNumber}) async {
+    return _animalsRemoteDataSource.getAnimals(animalNumber);
   }
 }

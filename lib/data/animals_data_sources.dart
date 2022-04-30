@@ -7,15 +7,17 @@ part 'animals_data_sources.g.dart';
 
 @RestApi(baseUrl: "https://zoo-animal-api.herokuapp.com")
 abstract class AnimalsRemoteDataSource {
-  factory AnimalsRemoteDataSource(Dio dio, {String baseUrl}) =
-      _AnimalsRemoteDataSource;
+  factory AnimalsRemoteDataSource(
+    Dio dio, {
+    String baseUrl,
+  }) = _AnimalsRemoteDataSource;
 
-  @GET("/animals/rand/9")
-  Future<List<AnimalsModel>> getAnimals();
+  @GET("/animals/rand/{n}")
+  Future<List<AnimalsModel>> getAnimals(@Path("n") int animalNumber);
 }
 
 // class AnimalsRemoteDataSource {
-//   Future<List<Map<String, dynamic>>?> getAnimals() async {
+//   Future<List<Map<String, dynamic>>?> getAnimals(String animalNumber) async {
 //     try {
 //       final response = await Dio().get<List<dynamic>>(
 //           'https://zoo-animal-api.herokuapp.com/animals/rand/2');

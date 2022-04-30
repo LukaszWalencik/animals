@@ -11,11 +11,12 @@ class AnimalsCubit extends Cubit<AnimalsState> {
 
   final AnimalsRepository _animalsRepository;
 
-  Future<void> getAnimalsModel() async {
+  Future<void> getAnimalsModel(int animalNumber) async {
     emit(
       AnimalsState(status: Status.loading),
     );
-    final animalsModel = await _animalsRepository.getAnimalsModel();
+    final animalsModel =
+        await _animalsRepository.getAnimalsModel(animalNumber: animalNumber);
     try {
       emit(
         AnimalsState(status: Status.success, animalsModel: animalsModel),

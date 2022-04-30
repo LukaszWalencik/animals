@@ -13,10 +13,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomeListPage extends StatelessWidget {
-  const HomeListPage({
+  HomeListPage({
     Key? key,
   }) : super(key: key);
-
+  final animalcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -26,7 +26,7 @@ class HomeListPage extends StatelessWidget {
             Dio(),
           ),
         ),
-      )..getAnimalsModel(),
+      ),
       child: BlocConsumer<AnimalsCubit, AnimalsState>(
         listener: (context, state) {
           if (state.status == Status.error) {
@@ -42,21 +42,7 @@ class HomeListPage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: AppColors.mainColor,
-              actions: [
-                IconButton(
-                    padding: const EdgeInsets.fromLTRB(
-                      AppDimens.s,
-                      AppDimens.s,
-                      AppDimens.ms,
-                      AppDimens.s,
-                    ),
-                    iconSize: 35,
-                    onPressed: () {
-                      context.read<AnimalsCubit>().getAnimalsModel();
-                      ;
-                    },
-                    icon: const Icon(Icons.refresh))
-              ],
+              centerTitle: true,
               title: const Text(
                 'Read something about animals!',
                 style: AppTypography.h2,
@@ -80,64 +66,102 @@ class HomeListPage extends StatelessWidget {
                   }
                   return Padding(
                     padding: const EdgeInsets.all(AppDimens.s),
-                    child: ListView(
+                    child: Column(
                       children: [
-                        for (final animals in state.animalsModel)
-
-                          //  AnimalCard(animalModel)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: AppRadius.s),
-                            child: GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return animalCard(animals, context);
-                                  },
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.listElementBlack,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(AppRadius.ms)),
-                                  border: Border.all(
-                                    width: 3,
-                                    color: AppColors.black,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(AppDimens.s),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Image.network(
-                                        animals.imageLink.toString(),
-                                        width: 150,
-                                        height: 150,
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.all(AppDimens.s),
-                                          child: Column(
-                                            children: [
-                                              const Text('Name:',
-                                                  style: AppTypography.h2),
-                                              Text(animals.name.toString(),
-                                                  style: AppTypography.h2),
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
+                        Text('Write how many animals you want to search!'),
+                        TextField(
+                          controller: animalcontroller,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: "Write number between 1-9",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12)),
                           ),
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              if (animalcontroller == null) {
+                                return null;
+                              }
+
+                              final animalNumber =
+                                  int.parse(animalcontroller.text);
+                              context
+                                  .read<AnimalsCubit>()
+                                  .getAnimalsModel(animalNumber);
+                              animalcontroller.clear();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: AppColors.mainColor,
+                            ),
+                            child: Text('Go!')),
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              for (final animals in state.animalsModel)
+
+                                //  AnimalCard(animalModel)
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: AppRadius.s),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return animalCard(animals, context);
+                                        },
+                                      );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColors.listElementBlack,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(AppRadius.ms)),
+                                        border: Border.all(
+                                          width: 3,
+                                          color: AppColors.black,
+                                          style: BorderStyle.solid,
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.all(AppDimens.s),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Image.network(
+                                              animals.imageLink.toString(),
+                                              width: 150,
+                                              height: 150,
+                                            ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(
+                                                    AppDimens.s),
+                                                child: Column(
+                                                  children: [
+                                                    const Text('Name:',
+                                                        style:
+                                                            AppTypography.h2),
+                                                    Text(
+                                                        animals.name.toString(),
+                                                        style:
+                                                            AppTypography.h2),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   );

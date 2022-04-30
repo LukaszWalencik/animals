@@ -18,7 +18,7 @@ class _AnimalsRemoteDataSource implements AnimalsRemoteDataSource {
   String? baseUrl;
 
   @override
-  Future<List<AnimalsModel>> getAnimals() async {
+  Future<List<AnimalsModel>> getAnimals(animalNumber) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -26,7 +26,7 @@ class _AnimalsRemoteDataSource implements AnimalsRemoteDataSource {
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<AnimalsModel>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/animals/rand/9',
+                .compose(_dio.options, '/animals/rand/${animalNumber}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
