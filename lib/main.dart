@@ -9,7 +9,7 @@ void main() async {
   final appDocumentDirectory =
       await path_provider.getApplicationDocumentsDirectory();
   await Hive.initFlutter(appDocumentDirectory.path);
-  await Hive.openBox('animalsbox');
   Hive.registerAdapter(AnimalsModelAdapter());
+  await Hive.openBox('animalsbox');
   runApp(const MyApp());
 }
