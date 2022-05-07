@@ -1,7 +1,10 @@
+import 'package:animals/authentication/cubit/authentication_cubit.dart';
 import 'package:animals/features/list_page/list_page.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:animals/presentation/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -30,7 +33,13 @@ class _AccountPageState extends State<AccountPage> {
           }
           if (currentIndex == 0) {
             return Center(
-              child: Text('Accout Page'),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: AppColors.mainColor),
+                onPressed: () {
+                  context.read<AuthenticationCubit>().signOut();
+                },
+                child: Text('Wyloguj'),
+              ),
             );
           }
           return Center(

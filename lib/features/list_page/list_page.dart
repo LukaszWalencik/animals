@@ -58,14 +58,6 @@ class HomeListPage extends StatelessWidget {
 
   Scaffold animalsLoading() {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.mainColor,
-        centerTitle: true,
-        title: const Text(
-          'Read something about animals!',
-          style: AppTypography.h2,
-        ),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -84,14 +76,6 @@ class HomeListPage extends StatelessWidget {
 
   Scaffold searchAnimals(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.mainColor,
-        centerTitle: true,
-        title: const Text(
-          'Read something about animals!',
-          style: AppTypography.h2,
-        ),
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(AppDimens.s),
@@ -140,14 +124,6 @@ class HomeListPage extends StatelessWidget {
     // final animal = animalBox.get(state) as AnimalsModel;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.mainColor,
-        centerTitle: true,
-        title: const Text(
-          'Read something about animals!',
-          style: AppTypography.h2,
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(AppDimens.s),
         child: ListView(
