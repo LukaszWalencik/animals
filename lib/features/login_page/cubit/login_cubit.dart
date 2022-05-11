@@ -28,9 +28,13 @@ class LoginCubit extends Cubit<LoginState> {
         email: email,
         password: password,
       );
-      emit(const LoginState(status: Status.loading));
+      emit(
+        const LoginState(status: Status.loading),
+      );
     } catch (error) {
-      emit(LoginState(status: Status.error, errorMessage: 'Sign up Error'));
+      emit(
+        const LoginState(status: Status.error, errorMessage: 'Sign up Error'),
+      );
     }
   }
 
@@ -40,9 +44,13 @@ class LoginCubit extends Cubit<LoginState> {
         email: email,
         password: password,
       );
-      emit(const LoginState(status: Status.loading));
+      emit(
+        const LoginState(status: Status.loading),
+      );
     } catch (error) {
-      emit(LoginState(status: Status.error, errorMessage: 'Sign in Error'));
+      emit(
+        const LoginState(status: Status.error, errorMessage: 'Sign in Error'),
+      );
     }
   }
 }

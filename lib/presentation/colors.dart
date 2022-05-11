@@ -8,4 +8,5 @@ class AppColors {
   static const black = Colors.black;
   static const listElementBlack = Colors.black12;
   static const mainColor = Colors.purple;
+  static const labelTextColor = Color.fromARGB(255, 83, 83, 83);
 }

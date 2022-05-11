@@ -14,9 +14,13 @@ class Authentication extends StatelessWidget {
       child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
         builder: (context, state) {
           final user = state.user;
+          final form = GlobalKey<FormState>();
 
           if (user == null) {
-            return const LoginPage();
+            return Form(
+              key: form,
+              child: LoginPage(form: form),
+            );
           }
           return const AccountPage();
         },

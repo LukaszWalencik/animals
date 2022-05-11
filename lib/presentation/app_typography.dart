@@ -1,3 +1,4 @@
+import 'package:animals/presentation/colors.dart';
 import 'package:flutter/material.dart';
 
 class AppTypography {
@@ -34,6 +35,13 @@ class AppTypography {
 
   static const caption = TextStyle(
     fontSize: 12,
+    fontWeight: FontWeight.normal,
+    height: 1.33,
+  );
+
+  static const labelTextStyle = TextStyle(
+    color: AppColors.labelTextColor,
+    fontSize: 16,
     fontWeight: FontWeight.normal,
     height: 1.33,
   );
