@@ -3,18 +3,19 @@ import 'package:animals/features/list_page/widgets/animal_card.dart';
 import 'package:animals/features/list_page/cubit/animals_cubit.dart';
 import 'package:animals/features/list_page/widgets/animals_loading_screen.dart';
 import 'package:animals/features/list_page/widgets/animals_search_screen.dart';
-import 'package:animals/features/list_page/widgets/animals_success_screen.dart';
-import 'package:animals/model/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:animals/presentation/colors.dart';
 import 'package:animals/presentation/dimens.dart';
 import 'package:animals/presentation/radius.dart';
 import 'package:animals/repository/animals_repository.dart';
+import 'package:animals/repository/favorite_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import 'package:favorite_button/favorite_button.dart';
 
 class HomeListPage extends StatelessWidget {
   HomeListPage({
@@ -24,18 +25,15 @@ class HomeListPage extends StatelessWidget {
 
   final animalBox = Hive.box('animalsbox');
   // final animal = animalBox.get(index) as AnimalModel;
-
+  var favorite = false;
+  var star = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
         create: (context) => AnimalsCubit(
-          AnimalsRepository(
-            AnimalsRemoteDataSource(
-              Dio(),
-            ),
-          ),
-        ),
+            AnimalsRepository(AnimalsRemoteDataSource(Dio())),
+            AnimalsFirebaseRepository()),
         child: BlocConsumer<AnimalsCubit, AnimalsState>(
           listener: (context, state) {
             if (state is AnimalsError) {
@@ -67,67 +65,90 @@ class HomeListPage extends StatelessWidget {
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.all(AppDimens.s),
-            child: ListView(
-              children: [
-                //
-                for (final animal in state.animalsModel)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: AppRadius.s),
-                    child: GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return animalCard(animal, context);
-                          },
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.listElementBlack,
-                          borderRadius: const BorderRadius.all(
-                              Radius.circular(AppRadius.ms)),
-                          border: Border.all(
-                            width: 3,
-                            color: AppColors.black,
-                            style: BorderStyle.solid,
-                          ),
+              padding: const EdgeInsets.all(AppDimens.s),
+              child: ListView.builder(
+                itemCount: state.animalsModel.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return animalCard(state.animalsModel[index], context);
+                        },
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.listElementBlack,
+                        borderRadius: const BorderRadius.all(
+                            Radius.circular(AppRadius.ms)),
+                        border: Border.all(
+                          width: 3,
+                          color: AppColors.black,
+                          style: BorderStyle.solid,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(AppDimens.s),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Image.network(
-                                animal.imageLink.toString(),
-                                width: 150,
-                                height: 150,
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(AppDimens.s),
-                                  child: Column(
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(AppDimens.s),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image.network(
+                              state.animalsModel[index].imageLink.toString(),
+                              width: 150,
+                              height: 150,
+                            ),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  // const Text('Name:',
+                                  //     style: AppTypography.h2),
+                                  Text(
+                                      state.animalsModel[index].name.toString(),
+                                      textAlign: TextAlign.center,
+                                      style: AppTypography.h2),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text('Name:',
-                                          style: AppTypography.h2),
-                                      Text(animal.name.toString(),
-                                          style: AppTypography.h2),
+                                      FavoriteButton(
+                                        iconSize: 50,
+                                        isFavorite: favorite,
+                                        // iconDisabledColor: Colors.white,
+                                        valueChanged: (_isFavorite) {
+                                          favorite = _isFavorite;
+                                          print('Is Favorite : $favorite');
+                                        },
+                                      ),
+                                      StarButton(
+                                        iconSize: 50,
+                                        isStarred: star,
+                                        // iconDisabledColor: Colors.white,
+                                        valueChanged: (starValue) {
+                                          if (starValue == true) {
+                                            animalBox
+                                                .add(state.animalsModel[index]);
+                                          } else if (starValue == false) {
+                                            animalBox.delete(
+                                                state.animalsModel[index]);
+                                          }
+                                          star = starValue;
+                                          print('Is Starred : $star');
+                                        },
+                                      )
                                     ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
-                  ),
-              ],
-            ),
-          ),
+                  );
+                },
+              )),
         ),
-        // const Text('Write how many animals you want to search!'),
         Container(
           color: AppColors.dialogBlack,
           child: Padding(

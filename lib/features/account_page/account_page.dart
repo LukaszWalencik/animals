@@ -1,4 +1,5 @@
 import 'package:animals/authentication/cubit/authentication_cubit.dart';
+import 'package:animals/features/favorites_firebase/favorites_firebase_page.dart';
 import 'package:animals/features/list_page/list_page.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:animals/presentation/colors.dart';
@@ -42,9 +43,7 @@ class _AccountPageState extends State<AccountPage> {
               ),
             );
           }
-          return Center(
-            child: Text('Favorites'),
-          );
+          return FavoritesFirebase();
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
