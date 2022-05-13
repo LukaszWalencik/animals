@@ -1,5 +1,6 @@
 import 'package:animals/authentication/cubit/authentication_cubit.dart';
 import 'package:animals/features/favorites_firebase/favorites_firebase_page.dart';
+import 'package:animals/features/favorites_hive/favorites_hive.dart';
 import 'package:animals/features/list_page/list_page.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:animals/presentation/colors.dart';
@@ -15,7 +16,7 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  var currentIndex = 0;
+  var currentIndex = 3;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,21 +30,25 @@ class _AccountPageState extends State<AccountPage> {
       ),
       body: Builder(
         builder: (context) {
-          if (currentIndex == 1) {
+          if (currentIndex == 0) {
             return HomeListPage();
           }
-          if (currentIndex == 0) {
-            return Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: AppColors.mainColor),
-                onPressed: () {
-                  context.read<AuthenticationCubit>().signOut();
-                },
-                child: Text('Wyloguj'),
-              ),
-            );
+          if (currentIndex == 1) {
+            return FavoritesHive();
           }
-          return FavoritesFirebase();
+          if (currentIndex == 2) {
+            return FavoritesFirebase();
+          }
+          return Center(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: AppColors.mainColor),
+              onPressed: () {
+                context.read<AuthenticationCubit>().signOut();
+              },
+              child: Text('Wyloguj'),
+            ),
+          );
+          ;
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -55,16 +60,24 @@ class _AccountPageState extends State<AccountPage> {
         },
         items: [
           BottomNavigationBarItem(
-            label: 'Account',
-            icon: Icon(Icons.person),
-          ),
-          BottomNavigationBarItem(
+            backgroundColor: AppColors.mainColor,
             label: 'Search',
             icon: Icon(Icons.search),
           ),
           BottomNavigationBarItem(
+            backgroundColor: AppColors.mainColor,
+            label: 'Hive',
+            icon: Icon(Icons.bug_report),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: AppColors.mainColor,
             label: 'My Favorites',
             icon: Icon(Icons.star),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: AppColors.mainColor,
+            label: 'Account',
+            icon: Icon(Icons.person),
           ),
         ],
       ),

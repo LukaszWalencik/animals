@@ -61,20 +61,21 @@ class HomeListPage extends StatelessWidget {
   }
 
   Column animalSuccessScreen(BuildContext context, AnimalsSuccess state) {
+    final animalModel = state.animalsModel;
     return Column(
       children: [
         Expanded(
           child: Padding(
               padding: const EdgeInsets.all(AppDimens.s),
               child: ListView.builder(
-                itemCount: state.animalsModel.length,
+                itemCount: animalModel.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return animalCard(state.animalsModel[index], context);
+                          return animalCard(animalModel[index], context);
                         },
                       );
                     },
@@ -95,7 +96,7 @@ class HomeListPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Image.network(
-                              state.animalsModel[index].imageLink.toString(),
+                              animalModel[index].imageLink.toString(),
                               width: 150,
                               height: 150,
                             ),
@@ -104,8 +105,7 @@ class HomeListPage extends StatelessWidget {
                                 children: [
                                   // const Text('Name:',
                                   //     style: AppTypography.h2),
-                                  Text(
-                                      state.animalsModel[index].name.toString(),
+                                  Text(animalModel[index].name.toString(),
                                       textAlign: TextAlign.center,
                                       style: AppTypography.h2),
                                   Row(
@@ -115,25 +115,58 @@ class HomeListPage extends StatelessWidget {
                                         iconSize: 50,
                                         isFavorite: favorite,
                                         // iconDisabledColor: Colors.white,
-                                        valueChanged: (_isFavorite) {
-                                          favorite = _isFavorite;
+                                        valueChanged: (favorite) {
+                                          if (favorite == true) {
+                                            context.read<AnimalsCubit>().add(
+                                                  name: animalModel[index].name,
+                                                  latinName: animalModel[index]
+                                                      .latinName,
+                                                  animalType: animalModel[index]
+                                                      .animalType,
+                                                  activeTime: animalModel[index]
+                                                      .activeTime,
+                                                  lengthMin: animalModel[index]
+                                                      .lengthMin,
+                                                  lengthMax: animalModel[index]
+                                                      .lengthMax,
+                                                  weightMin: animalModel[index]
+                                                      .weightMin,
+                                                  weightMax: animalModel[index]
+                                                      .weightMax,
+                                                  lifespan: animalModel[index]
+                                                      .lifespan,
+                                                  habitat: animalModel[index]
+                                                      .habitat,
+                                                  diet: animalModel[index].diet,
+                                                  geoRange: animalModel[index]
+                                                      .geoRange,
+                                                  imageLink: animalModel[index]
+                                                      .imageLink,
+                                                  // id: state
+                                                  //     .animalModel[index].id
+                                                );
+                                          } else if (favorite == false) {
+                                            // context.read<AnimalsCubit>().delete(id: id)                                       );
+                                          }
+                                          ;
                                           print('Is Favorite : $favorite');
                                         },
                                       ),
                                       StarButton(
+                                        iconColor:
+                                            Color.fromARGB(255, 255, 196, 0),
                                         iconSize: 50,
                                         isStarred: star,
-                                        // iconDisabledColor: Colors.white,
                                         valueChanged: (starValue) {
                                           if (starValue == true) {
-                                            animalBox
-                                                .add(state.animalsModel[index]);
+                                            animalBox.add(animalModel[index]);
+                                            // animalBox.clear();
                                           } else if (starValue == false) {
-                                            animalBox.delete(
-                                                state.animalsModel[index]);
+                                            animalBox
+                                                .delete(animalModel[index]);
                                           }
-                                          star = starValue;
-                                          print('Is Starred : $star');
+                                          print(animalBox.get(index));
+                                          print('Is Starred : $starValue');
                                         },
                                       )
                                     ],
@@ -184,13 +217,13 @@ class HomeListPage extends StatelessWidget {
                               .read<AnimalsCubit>()
                               .getAnimalsModel(animalNumber);
 
-                          context
-                              .read<AnimalsCubit>()
-                              .saveAnimalData(animalNumber);
-                          context
-                              .read<AnimalsCubit>()
-                              .saveDataFromMemory(animalNumber);
-                          animalcontroller.clear();
+                          // context
+                          //     .read<AnimalsCubit>()
+                          //     .saveAnimalData(animalNumber);
+                          // context
+                          //     .read<AnimalsCubit>()
+                          //     .saveDataFromMemory(animalNumber);
+                          // animalcontroller.clear();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

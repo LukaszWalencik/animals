@@ -73,26 +73,31 @@ class AnimalsCubit extends Cubit<AnimalsState> {
     required String diet,
     required String geoRange,
     required String imageLink,
-    required int id,
+    // required int id,
   }) async {
     try {
       await _animalsFirebaseRepository.add(
-          name,
-          latinName,
-          animalType,
-          activeTime,
-          lengthMin,
-          lengthMax,
-          weightMin,
-          weightMax,
-          lifespan,
-          habitat,
-          diet,
-          geoRange,
-          imageLink,
-          id);
+        name,
+        latinName,
+        animalType,
+        activeTime,
+        lengthMin,
+        lengthMax,
+        weightMin,
+        weightMax,
+        lifespan,
+        habitat,
+        diet,
+        geoRange,
+        imageLink,
+        // id
+      );
     } catch (error) {
       emit(AnimalsError('Something went wrong'));
     }
+  }
+
+  Future<void> delete({required String id}) async {
+    await _animalsFirebaseRepository.remove(id: id);
   }
 }

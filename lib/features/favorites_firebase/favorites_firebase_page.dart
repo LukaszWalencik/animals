@@ -34,10 +34,10 @@ class FavoritesFirebase extends StatelessWidget {
 
           final animalModels = state.favoriteAnimal;
           return ListView.builder(
-              itemCount: state.favoriteAnimal.length,
+              itemCount: animalModels.length,
               itemBuilder: (context, index) {
                 return Card(
-                  child: Text(state.favoriteAnimal[index].name),
+                  child: Text(animalModels[index].name),
                 );
               });
         },

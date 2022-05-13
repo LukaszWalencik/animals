@@ -4,44 +4,45 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AnimalsFirebaseRepository {
   Stream<List<AnimalsModel>> getAnimalsStream() {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      null;
-    }
+    // final userID = FirebaseAuth.instance.currentUser?.uid;
+    // if (userID == null) {
+    //   null;
+    // }
     return FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
+        // .collection('users')
+        // .doc(userID)
         .collection('animals')
         .snapshots()
         .map((querySnapshot) {
       return querySnapshot.docs.map((doc) {
         return AnimalsModel(
-            name: doc['name'],
-            latinName: doc['latinName'],
-            animalType: doc['animalType'],
-            activeTime: doc['activeTime'],
-            lengthMin: doc['lengthMin'],
-            lengthMax: doc['vlengthMax'],
-            weightMin: doc['weightMin'],
-            weightMax: doc['weightMax'],
-            lifespan: doc['lifespan'],
-            habitat: doc['habitat'],
-            diet: doc['diet'],
-            geoRange: doc['geoRange'],
-            imageLink: doc['imageLink'],
-            id: int.parse(doc.id));
+          id: doc['id'],
+          name: doc['name'],
+          latinName: doc['latinName'],
+          animalType: doc['animalType'],
+          activeTime: doc['activeTime'],
+          lengthMin: doc['lengthMin'],
+          lengthMax: doc['lengthMax'],
+          weightMin: doc['weightMin'],
+          weightMax: doc['weightMax'],
+          lifespan: doc['lifespan'],
+          habitat: doc['habitat'],
+          diet: doc['diet'],
+          geoRange: doc['geoRange'],
+          imageLink: doc['imageLink'],
+        );
       }).toList();
     });
   }
 
   Future<void> remove({required String id}) async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      null;
-    }
+    // final userID = FirebaseAuth.instance.currentUser?.uid;
+    // if (userID == null) {
+    //   null;
+    // }
     FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
+        // .collection('users')
+        // .doc(userID)
         .collection('animals')
         .doc(id)
         .delete();
@@ -61,15 +62,15 @@ class AnimalsFirebaseRepository {
     String diet,
     String geoRange,
     String imageLink,
-    int id,
+    // int id,
   ) async {
-    final userID = FirebaseAuth.instance.currentUser?.uid;
-    if (userID == null) {
-      throw Exception('Nie zalogowano');
-    }
+    // final userID = FirebaseAuth.instance.currentUser?.uid;
+    // if (userID == null) {
+    //   throw Exception('Nie zalogowano');
+    // }
     await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
+        // .collection('users')
+        // .doc(userID)
         .collection('animals')
         .add(
       {
@@ -86,7 +87,7 @@ class AnimalsFirebaseRepository {
         'diet': diet,
         'geoRange': geoRange,
         'imageLink': imageLink,
-        'id': id
+        // 'id': id
       },
     );
   }
