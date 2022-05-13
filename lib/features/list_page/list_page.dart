@@ -159,7 +159,8 @@ class HomeListPage extends StatelessWidget {
                                         isStarred: star,
                                         valueChanged: (starValue) {
                                           if (starValue == true) {
-                                            animalBox.add(animalModel[index]);
+                                            animalBox.put(
+                                                index, animalModel[index]);
                                             // animalBox.clear();
                                           } else if (starValue == false) {
                                             animalBox
