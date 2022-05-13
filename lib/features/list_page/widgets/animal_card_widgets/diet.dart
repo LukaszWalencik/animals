@@ -1,17 +1,17 @@
-import 'package:animals/model/animals_model.dart';
+import 'package:animals/models/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:flutter/material.dart';
 
-Row weightMaximum(AnimalsModel animalsModel) {
-  return Row(
+Column diet(AnimalsModel animalsModel) {
+  return Column(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       const Text(
-        'Weight maximum:',
+        'Diet:',
         style: AppTypography.body2bold,
       ),
       Text(
-        animalsModel.weightMax.toString(),
+        animalsModel.diet.toString(),
         style: AppTypography.body2bold,
       ),
     ],

@@ -1,4 +1,4 @@
-import 'package:animals/model/animals_model.dart';
+import 'package:animals/models/animals_model.dart';
 import 'package:dio/dio.dart';
 
 import 'package:retrofit/retrofit.dart';

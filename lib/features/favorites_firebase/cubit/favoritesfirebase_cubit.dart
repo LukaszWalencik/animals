@@ -44,6 +44,9 @@ class FavoritesFirebaseCubit extends Cubit<FavoritesFirebaseState> {
     return super.close();
   }
 
+  Future<void> delete({required String id}) async {
+    await _animalsFirebaseRepository.remove(id: id);
+  }
   // Future<void> delete({required int id}) async {
   //   await _animalsFirebaseRepository.remove(id: id);
   //   start();

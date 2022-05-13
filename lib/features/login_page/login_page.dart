@@ -40,7 +40,7 @@ class LoginPage extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SignInUpText(state),
+                      signInUpText(state),
                       const SizedBox(
                         height: AppDimens.xxxl,
                       ),

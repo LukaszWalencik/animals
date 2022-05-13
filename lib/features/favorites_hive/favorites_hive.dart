@@ -1,9 +1,11 @@
-import 'package:animals/model/animals_model.dart';
+import 'package:animals/features/list_page/cubit/animals_cubit.dart';
+import 'package:animals/models/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:animals/presentation/colors.dart';
 import 'package:animals/presentation/dimens.dart';
 import 'package:animals/presentation/radius.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class FavoritesHive extends StatelessWidget {
@@ -18,7 +20,7 @@ class FavoritesHive extends StatelessWidget {
           itemCount: animalBox.length,
           itemBuilder: (context, index) {
             final animals = animalBox.get(index) as AnimalsModel;
-            print(animals);
+            print(animalBox.length);
             return GestureDetector(
               onTap: () {
                 showDialog(
@@ -261,7 +263,7 @@ class FavoritesHive extends StatelessWidget {
                       ),
                       Expanded(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             // const Text('Name:',
                             //     style: AppTypography.h2),
@@ -269,10 +271,13 @@ class FavoritesHive extends StatelessWidget {
                                 textAlign: TextAlign.center,
                                 style: AppTypography.h2),
                             IconButton(
+                                color: AppColors.errorColor,
                                 onPressed: () {
-                                  animalBox.deleteAt(index);
+                                  context
+                                      .read<AnimalsCubit>()
+                                      .deleteFromHive(index);
                                 },
-                                icon: Icon(Icons.delete))
+                                icon: const Icon(Icons.delete))
                           ],
                         ),
                       )

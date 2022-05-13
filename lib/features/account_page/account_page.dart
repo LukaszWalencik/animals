@@ -4,7 +4,6 @@ import 'package:animals/features/favorites_hive/favorites_hive.dart';
 import 'package:animals/features/list_page/list_page.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:animals/presentation/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,10 +33,10 @@ class _AccountPageState extends State<AccountPage> {
             return HomeListPage();
           }
           if (currentIndex == 1) {
-            return FavoritesHive();
+            return const FavoritesHive();
           }
           if (currentIndex == 2) {
-            return FavoritesFirebase();
+            return const FavoritesFirebase();
           }
           return Center(
             child: ElevatedButton(
@@ -45,10 +44,9 @@ class _AccountPageState extends State<AccountPage> {
               onPressed: () {
                 context.read<AuthenticationCubit>().signOut();
               },
-              child: Text('Wyloguj'),
+              child: const Text('Wyloguj'),
             ),
           );
-          ;
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -58,7 +56,7 @@ class _AccountPageState extends State<AccountPage> {
             currentIndex = newIndex;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             backgroundColor: AppColors.mainColor,
             label: 'Search',

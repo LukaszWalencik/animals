@@ -1,18 +1,18 @@
-import 'package:animals/model/animals_model.dart';
+import 'package:animals/models/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:flutter/material.dart';
 
-Row animalType(AnimalsModel animalsModel) {
+Row name(AnimalsModel animalsModel) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       const Text(
-        'Animal type:',
-        style: AppTypography.body2bold,
+        'Name:',
+        style: AppTypography.h3,
       ),
       Text(
-        animalsModel.animalType.toString(),
-        style: AppTypography.body2bold,
+        animalsModel.name.toString(),
+        style: AppTypography.h3,
       ),
     ],
   );

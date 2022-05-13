@@ -1,20 +1,15 @@
-import 'package:animals/model/animals_model.dart';
+import 'package:animals/models/animals_model.dart';
 import 'package:animals/repository/animals_repository.dart';
-import 'package:animals/repository/favorite_repository.dart';
 import 'package:bloc/bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meta/meta.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'animals_event.dart';
 part 'animals_state.dart';
 
 class AnimalsBloc extends Bloc<AnimalsEvent, AnimalsState> {
   final AnimalsRepository _animalsRepository;
-  final AnimalsFirebaseRepository _animalsFirebaseRepository;
 
-  AnimalsBloc(this._animalsRepository, this._animalsFirebaseRepository)
-      : super(const AnimalsInitial()) {
+  AnimalsBloc(this._animalsRepository) : super(const AnimalsInitial()) {
     on<GetAnimalsModel>((event, emit) async {
       int animalNumber = event.animalNumber;
       try {

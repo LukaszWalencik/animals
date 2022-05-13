@@ -1,4 +1,4 @@
-import 'package:animals/model/animals_model.dart';
+import 'package:animals/models/firebase_animals_model.dart';
 
 class FavoritesFirebaseState {
   const FavoritesFirebaseState({
@@ -7,7 +7,7 @@ class FavoritesFirebaseState {
     required this.errorMessage,
   });
 
-  final List<AnimalsModel> favoriteAnimal;
+  final List<FirebaseAnimalsModel> favoriteAnimal;
   final bool isLoading;
   final String errorMessage;
 }

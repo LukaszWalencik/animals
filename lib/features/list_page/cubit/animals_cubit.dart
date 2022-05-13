@@ -1,9 +1,8 @@
-import 'package:animals/model/animals_model.dart';
+import 'package:animals/models/animals_model.dart';
 import 'package:animals/repository/animals_repository.dart';
 import 'package:animals/repository/favorite_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'animals_state.dart';
 
@@ -27,26 +26,30 @@ class AnimalsCubit extends Cubit<AnimalsState> {
     }
   }
 
-  Future<void> saveAnimalData(int animalNumber) async {
-    final animalsModel =
-        await _animalsRepository.getAnimalsModel(animalNumber: animalNumber);
-    final box = Hive.box('animalsbox');
-    // final List<AnimalsModel> animalsModel;
-    final animals = animalsModel;
-    box.add(animals);
-    print(animals);
+  void deleteFromHive(int index) {
+    final animalBox = Hive.box('animalsbox');
+    animalBox.deleteAt(index);
   }
+  // Future<void> saveAnimalData(int animalNumber) async {
+  //   final animalsModel =
+  //       await _animalsRepository.getAnimalsModel(animalNumber: animalNumber);
+  //   final box = Hive.box('animalsbox');
+  //   // final List<AnimalsModel> animalsModel;
+  //   final animals = animalsModel;
+  //   box.add(animals);
+  //   print(animals);
+  // }
 
-  Future<void> saveDataFromMemory(int animalNumber) async {
-    // Obtain shared preferences.
-    final prefs = await SharedPreferences.getInstance();
-    final animalsModel =
-        await _animalsRepository.getAnimalsModel(animalNumber: animalNumber);
-    final animals = animalsModel;
-    for (final animal in animals) {
-      await prefs.setString('name', animal.name);
-    }
-  }
+  // Future<void> saveDataFromMemory(int animalNumber) async {
+  //   // Obtain shared preferences.
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final animalsModel =
+  //       await _animalsRepository.getAnimalsModel(animalNumber: animalNumber);
+  //   final animals = animalsModel;
+  //   for (final animal in animals) {
+  //     await prefs.setString('name', animal.name);
+  //   }
+  // }
 
   // Future<void> readDataFromMemory(int animalNumber) async {
   //   // Obtain shared preferences.
@@ -60,6 +63,7 @@ class AnimalsCubit extends Cubit<AnimalsState> {
   //   }
   // }
   Future<void> add({
+    required int animalId,
     required String name,
     required String latinName,
     required String animalType,
@@ -77,27 +81,22 @@ class AnimalsCubit extends Cubit<AnimalsState> {
   }) async {
     try {
       await _animalsFirebaseRepository.add(
-        name,
-        latinName,
-        animalType,
-        activeTime,
-        lengthMin,
-        lengthMax,
-        weightMin,
-        weightMax,
-        lifespan,
-        habitat,
-        diet,
-        geoRange,
-        imageLink,
-        // id
-      );
+          animalId,
+          name,
+          latinName,
+          animalType,
+          activeTime,
+          lengthMin,
+          lengthMax,
+          weightMin,
+          weightMax,
+          lifespan,
+          habitat,
+          diet,
+          geoRange,
+          imageLink);
     } catch (error) {
-      emit(AnimalsError('Something went wrong'));
+      emit(const AnimalsError('Something went wrong'));
     }
-  }
-
-  Future<void> delete({required String id}) async {
-    await _animalsFirebaseRepository.remove(id: id);
   }
 }

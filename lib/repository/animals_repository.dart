@@ -1,5 +1,5 @@
 import 'package:animals/data/animals_data_sources.dart';
-import 'package:animals/model/animals_model.dart';
+import 'package:animals/models/animals_model.dart';
 
 class AnimalsRepository {
   AnimalsRepository(this._animalsRemoteDataSource);

@@ -1,16 +1,17 @@
-import 'package:animals/model/animals_model.dart';
+import 'package:animals/models/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:flutter/material.dart';
 
-Column habitat(AnimalsModel animalsModel) {
-  return Column(
+Row latinName(AnimalsModel animalsModel) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       const Text(
-        'Habitat:',
+        'Latin name:',
         style: AppTypography.body2bold,
       ),
       Text(
-        animalsModel.habitat.toString(),
+        animalsModel.latinName.toString(),
         style: AppTypography.body2bold,
       ),
     ],

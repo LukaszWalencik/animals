@@ -1,4 +1,3 @@
-import 'package:animals/data/animals_data_sources.dart';
 import 'package:animals/features/list_page/widgets/animal_card.dart';
 import 'package:animals/features/list_page/cubit/animals_cubit.dart';
 import 'package:animals/features/list_page/widgets/animals_loading_screen.dart';
@@ -7,9 +6,6 @@ import 'package:animals/presentation/app_typography.dart';
 import 'package:animals/presentation/colors.dart';
 import 'package:animals/presentation/dimens.dart';
 import 'package:animals/presentation/radius.dart';
-import 'package:animals/repository/animals_repository.dart';
-import 'package:animals/repository/favorite_repository.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,38 +20,30 @@ class HomeListPage extends StatelessWidget {
   final animalcontroller = TextEditingController();
 
   final animalBox = Hive.box('animalsbox');
-  // final animal = animalBox.get(index) as AnimalModel;
-  var favorite = false;
-  var star = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => AnimalsCubit(
-            AnimalsRepository(AnimalsRemoteDataSource(Dio())),
-            AnimalsFirebaseRepository()),
-        child: BlocConsumer<AnimalsCubit, AnimalsState>(
-          listener: (context, state) {
-            if (state is AnimalsError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Sorry, something went wrong ='("),
-                  backgroundColor: AppColors.errorColor,
-                ),
-              );
-            }
-          },
-          builder: (context, state) {
-            if (state is AnimalsLoading) {
-              return const AnimalsLoadingScreen();
-            }
-            if (state is AnimalsSuccess) {
-              return animalSuccessScreen(context, state);
-            }
+      body: BlocConsumer<AnimalsCubit, AnimalsState>(
+        listener: (context, state) {
+          if (state is AnimalsError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Sorry, something went wrong ='("),
+                backgroundColor: AppColors.errorColor,
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state is AnimalsLoading) {
+            return const AnimalsLoadingScreen();
+          }
+          if (state is AnimalsSuccess) {
+            return animalSuccessScreen(context, state);
+          }
 
-            return AnimalSearchScreen(animalcontroller: animalcontroller);
-          },
-        ),
+          return AnimalSearchScreen(animalcontroller: animalcontroller);
+        },
       ),
     );
   }
@@ -113,11 +101,12 @@ class HomeListPage extends StatelessWidget {
                                     children: [
                                       FavoriteButton(
                                         iconSize: 50,
-                                        isFavorite: favorite,
                                         // iconDisabledColor: Colors.white,
                                         valueChanged: (favorite) {
                                           if (favorite == true) {
                                             context.read<AnimalsCubit>().add(
+                                                  animalId:
+                                                      animalModel[index].id,
                                                   name: animalModel[index].name,
                                                   latinName: animalModel[index]
                                                       .latinName,
@@ -142,21 +131,17 @@ class HomeListPage extends StatelessWidget {
                                                       .geoRange,
                                                   imageLink: animalModel[index]
                                                       .imageLink,
-                                                  // id: state
-                                                  //     .animalModel[index].id
                                                 );
                                           } else if (favorite == false) {
-                                            // context.read<AnimalsCubit>().delete(id: id)                                       );
+                                            // context.read<FavoritesFirebaseCubit>().delete(id: )                                       );
                                           }
-                                          ;
                                           print('Is Favorite : $favorite');
                                         },
                                       ),
                                       StarButton(
-                                        iconColor:
-                                            Color.fromARGB(255, 255, 196, 0),
+                                        iconColor: const Color.fromARGB(
+                                            255, 255, 196, 0),
                                         iconSize: 50,
-                                        isStarred: star,
                                         valueChanged: (starValue) {
                                           if (starValue == true) {
                                             animalBox.put(
@@ -201,7 +186,8 @@ class HomeListPage extends StatelessWidget {
                     decoration: InputDecoration(
                       hintText: "Write number between 1-9",
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.mainColor),
+                        borderSide:
+                            const BorderSide(color: AppColors.mainColor),
                         borderRadius: BorderRadius.circular(AppRadius.xm),
                       ),
                     ),

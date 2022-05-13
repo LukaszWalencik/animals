@@ -35,7 +35,7 @@ class AnimalSearchScreen extends StatelessWidget {
                   final animalNumber = int.parse(animalcontroller.text);
                   if (animalNumber != 0) {
                     context.read<AnimalsCubit>().getAnimalsModel(animalNumber);
-                    context.read<AnimalsCubit>().saveAnimalData(animalNumber);
+                    // context.read<AnimalsCubit>().saveAnimalData(animalNumber);
                     animalcontroller.clear();
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
