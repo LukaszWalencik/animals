@@ -2,16 +2,18 @@ import 'package:animals/models/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:flutter/material.dart';
 
-Row latinName(AnimalsModel animalsModel) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+Widget informationColumn(
+    {required AnimalsModel animalsModel,
+    required String text,
+    required String body}) {
+  return Column(
     children: [
-      const Text(
-        'Latin name:',
+      Text(
+        text,
         style: AppTypography.body2bold,
       ),
       Text(
-        animalsModel.latinName.toString(),
+        body,
         style: AppTypography.body2bold,
       ),
     ],

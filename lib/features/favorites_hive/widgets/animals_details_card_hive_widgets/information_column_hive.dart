@@ -1,16 +1,15 @@
-import 'package:animals/models/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:flutter/material.dart';
 
-Column geoRange(AnimalsModel animalsModel) {
+Widget informationColumn({required String text, required String body}) {
   return Column(
     children: [
-      const Text(
-        'Geography range:',
+      Text(
+        text,
         style: AppTypography.body2bold,
       ),
       Text(
-        animalsModel.geoRange.toString(),
+        body,
         style: AppTypography.body2bold,
       ),
     ],

@@ -1,17 +1,17 @@
-import 'package:animals/models/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:flutter/material.dart';
 
-Column diet(AnimalsModel animalsModel) {
+Widget informationColumn({required String text, required String body}) {
   return Column(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      const Text(
-        'Diet:',
+      Text(
+        text,
+        // 'Habitat:',
         style: AppTypography.body2bold,
       ),
       Text(
-        animalsModel.diet.toString(),
+        body,
+        // animalModel[index].habitat,
         style: AppTypography.body2bold,
       ),
     ],

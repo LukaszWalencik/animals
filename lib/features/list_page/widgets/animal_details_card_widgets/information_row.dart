@@ -2,17 +2,20 @@ import 'package:animals/models/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:flutter/material.dart';
 
-Row name(AnimalsModel animalsModel) {
+Widget informationRow(
+    {required AnimalsModel animalsModel,
+    required String text,
+    required String body}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      const Text(
-        'Name:',
-        style: AppTypography.h3,
+      Text(
+        text,
+        style: AppTypography.body2bold,
       ),
       Text(
-        animalsModel.name.toString(),
-        style: AppTypography.h3,
+        body,
+        style: AppTypography.body2bold,
       ),
     ],
   );

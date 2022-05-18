@@ -1,17 +1,19 @@
 import 'package:animals/features/list_page/widgets/animal_card.dart';
+import 'package:animals/features/list_page/widgets/animal_details_card.dart';
 import 'package:animals/features/list_page/cubit/animals_cubit.dart';
 import 'package:animals/features/list_page/widgets/animals_loading_screen.dart';
 import 'package:animals/features/list_page/widgets/animals_search_screen.dart';
+import 'package:animals/features/list_page/widgets/animal_card_widgets/favorite_button.dart';
+import 'package:animals/features/list_page/widgets/search_bar.dart';
+import 'package:animals/features/list_page/widgets/animal_card_widgets/star_button.dart';
+import 'package:animals/models/animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
 import 'package:animals/presentation/colors.dart';
 import 'package:animals/presentation/dimens.dart';
 import 'package:animals/presentation/radius.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import 'package:favorite_button/favorite_button.dart';
 
 class HomeListPage extends StatelessWidget {
   HomeListPage({
@@ -63,171 +65,20 @@ class HomeListPage extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return animalCard(animalModel[index], context);
+                          return animalDetailsCard(animalModel[index], context);
                         },
                       );
                     },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.listElementBlack,
-                        borderRadius: const BorderRadius.all(
-                            Radius.circular(AppRadius.ms)),
-                        border: Border.all(
-                          width: 3,
-                          color: AppColors.black,
-                          style: BorderStyle.solid,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(AppDimens.s),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Image.network(
-                              animalModel[index].imageLink.toString(),
-                              width: 150,
-                              height: 150,
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  // const Text('Name:',
-                                  //     style: AppTypography.h2),
-                                  Text(animalModel[index].name.toString(),
-                                      textAlign: TextAlign.center,
-                                      style: AppTypography.h2),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      FavoriteButton(
-                                        iconSize: 50,
-                                        // iconDisabledColor: Colors.white,
-                                        valueChanged: (favorite) {
-                                          if (favorite == true) {
-                                            context.read<AnimalsCubit>().add(
-                                                  animalId:
-                                                      animalModel[index].id,
-                                                  name: animalModel[index].name,
-                                                  latinName: animalModel[index]
-                                                      .latinName,
-                                                  animalType: animalModel[index]
-                                                      .animalType,
-                                                  activeTime: animalModel[index]
-                                                      .activeTime,
-                                                  lengthMin: animalModel[index]
-                                                      .lengthMin,
-                                                  lengthMax: animalModel[index]
-                                                      .lengthMax,
-                                                  weightMin: animalModel[index]
-                                                      .weightMin,
-                                                  weightMax: animalModel[index]
-                                                      .weightMax,
-                                                  lifespan: animalModel[index]
-                                                      .lifespan,
-                                                  habitat: animalModel[index]
-                                                      .habitat,
-                                                  diet: animalModel[index].diet,
-                                                  geoRange: animalModel[index]
-                                                      .geoRange,
-                                                  imageLink: animalModel[index]
-                                                      .imageLink,
-                                                );
-                                          } else if (favorite == false) {
-                                            // context.read<FavoritesFirebaseCubit>().delete(id: )                                       );
-                                          }
-                                          print('Is Favorite : $favorite');
-                                        },
-                                      ),
-                                      StarButton(
-                                        iconColor: const Color.fromARGB(
-                                            255, 255, 196, 0),
-                                        iconSize: 50,
-                                        valueChanged: (starValue) {
-                                          if (starValue == true) {
-                                            animalBox.put(
-                                                index, animalModel[index]);
-                                            // animalBox.clear();
-                                          } else if (starValue == false) {
-                                            animalBox
-                                                .delete(animalModel[index]);
-                                          }
-                                          print(animalBox.get(index));
-                                          print('Is Starred : $starValue');
-                                        },
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                    child: AnimalsCard(
+                      animalModel: animalModel,
+                      animalBox: animalBox,
+                      index: index,
                     ),
                   );
                 },
               )),
         ),
-        Container(
-          color: AppColors.dialogBlack,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 8, 0, 0),
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 280,
-                  height: 70,
-                  child: TextField(
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(1),
-                    ],
-                    controller: animalcontroller,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      hintText: "Write number between 1-9",
-                      border: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: AppColors.mainColor),
-                        borderRadius: BorderRadius.circular(AppRadius.xm),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: AppDimens.ms),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        final animalNumber = int.parse(animalcontroller.text);
-                        if (animalNumber != 0) {
-                          context
-                              .read<AnimalsCubit>()
-                              .getAnimalsModel(animalNumber);
-
-                          // context
-                          //     .read<AnimalsCubit>()
-                          //     .saveAnimalData(animalNumber);
-                          // context
-                          //     .read<AnimalsCubit>()
-                          //     .saveDataFromMemory(animalNumber);
-                          // animalcontroller.clear();
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Value must be between 1-9'),
-                            ),
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: AppColors.mainColor,
-                      ),
-                      child: const Text('Go!')),
-                ),
-              ],
-            ),
-          ),
-        ),
+        SearchBar(animalcontroller: animalcontroller),
       ],
     );
   }
