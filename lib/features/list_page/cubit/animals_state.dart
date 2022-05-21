@@ -15,7 +15,7 @@ class AnimalsLoading extends AnimalsState {
 class AnimalsSuccess extends AnimalsState {
   final List<AnimalsModel> animalsModel;
   // final Weather weather;
-  const AnimalsSuccess(this.animalsModel);
+  const AnimalsSuccess({required this.animalsModel});
 }
 
 class AnimalsError extends AnimalsState {

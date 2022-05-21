@@ -2,6 +2,12 @@ import 'package:animals/features/favorites_firebase/cubit/favoritesfirebase_cubi
 import 'package:animals/features/favorites_firebase/cubit/favoritesfirebase_state.dart';
 import 'package:animals/features/favorites_firebase/widgets/animal_card_firebase.dart';
 import 'package:animals/features/favorites_firebase/widgets/animal_details_card_firebase.dart';
+import 'package:animals/features/favorites_firebase/widgets/favorites_firebase_loading_screen.dart';
+import 'package:animals/features/favorites_firebase/widgets/favorites_firebase_success_screen.dart';
+import 'package:animals/models/firebase_animals_model.dart';
+import 'package:animals/presentation/app_typography.dart';
+import 'package:animals/presentation/colors.dart';
+import 'package:animals/presentation/dimens.dart';
 import 'package:animals/repository/favorite_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,54 +17,39 @@ class FavoritesFirebase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => FavoritesFirebaseCubit(
-        AnimalsFirebaseRepository(),
-      )..start(),
-      child: BlocBuilder<FavoritesFirebaseCubit, FavoritesFirebaseState>(
-        builder: (context, state) {
-          if (state.errorMessage.isNotEmpty) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(state.errorMessage),
-              ],
-            );
-          }
-          if (state.isLoading == true) {
+    return Scaffold(
+      body: BlocProvider(
+        create: (context) => FavoritesFirebaseCubit(
+          AnimalsFirebaseRepository(),
+        )..start(),
+        child: BlocConsumer<FavoritesFirebaseCubit, FavoritesFirebaseState>(
+          listener: (context, state) {
+            if (state is FavoritesFirebaseError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Sorry, something went wrong ='("),
+                  backgroundColor: AppColors.errorColor,
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state is FavoritesFirebaseLoading) {
+              return const FavoritesFirebaseLoadingScreen();
+            }
+            if (state is FavoritesFirebaseSuccess) {
+              final animalModel = state.favoriteAnimal;
+              return FavoritesFirebaseSuccessScreen(animalModel: animalModel);
+            }
+
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  CircularProgressIndicator(),
-                ],
+                children: const [Text('Add some animals to favorites')],
               ),
             );
-          }
-
-          final animalModel = state.favoriteAnimal;
-          return ListView.builder(
-              itemCount: animalModel.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AnimalDetailsCardFirebase(
-                          animalModel: animalModel,
-                          index: index,
-                        );
-                      },
-                    );
-                  },
-                  child: AnimalCardFirebase(
-                    animalModel: animalModel,
-                    index: index,
-                  ),
-                );
-              });
-        },
+          },
+        ),
       ),
     );
   }

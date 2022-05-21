@@ -18,7 +18,7 @@ class AnimalsCubit extends Cubit<AnimalsState> {
       emit(const AnimalsLoading());
       final animalsModel =
           await _animalsRepository.getAnimalsModel(animalNumber: animalNumber);
-      emit(AnimalsSuccess(animalsModel));
+      emit(AnimalsSuccess(animalsModel: animalsModel));
     } catch (error) {
       emit(
         const AnimalsError('Something went wrong'),

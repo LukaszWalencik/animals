@@ -1,13 +1,7 @@
 import 'package:animals/features/favorites_hive/widgets/animal_card_hive.dart';
 import 'package:animals/features/favorites_hive/widgets/animal_details_card_hive.dart';
-import 'package:animals/features/list_page/cubit/animals_cubit.dart';
 import 'package:animals/models/animals_model.dart';
-import 'package:animals/presentation/app_typography.dart';
-import 'package:animals/presentation/colors.dart';
-import 'package:animals/presentation/dimens.dart';
-import 'package:animals/presentation/radius.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class FavoritesHive extends StatelessWidget {

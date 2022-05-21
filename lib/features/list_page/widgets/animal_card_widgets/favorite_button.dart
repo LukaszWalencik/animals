@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Favorite extends StatelessWidget {
-  Favorite({
+  const Favorite({
     Key? key,
     required this.animalModel,
     required this.index,

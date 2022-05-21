@@ -5,35 +5,23 @@ import 'package:animals/repository/favorite_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavoritesFirebaseCubit extends Cubit<FavoritesFirebaseState> {
-  FavoritesFirebaseCubit(
-    this._animalsFirebaseRepository,
-  ) : super(const FavoritesFirebaseState(
-          favoriteAnimal: [],
-          errorMessage: '',
-          isLoading: false,
-        ));
-
   final AnimalsFirebaseRepository _animalsFirebaseRepository;
+
+  FavoritesFirebaseCubit(this._animalsFirebaseRepository)
+      : super(const FavoritesFirebaseInitial());
   StreamSubscription? _streamSubscription;
 
   Future<void> start() async {
-    emit(
-      const FavoritesFirebaseState(
-          favoriteAnimal: [], isLoading: true, errorMessage: ''),
-    );
+    emit(const FavoritesFirebaseLoading());
 
     _streamSubscription =
         _animalsFirebaseRepository.getAnimalsStream().listen((favoriteAnimal) {
-      emit(FavoritesFirebaseState(
-          favoriteAnimal: favoriteAnimal, isLoading: false, errorMessage: ''));
+      emit(FavoritesFirebaseSuccess(favoriteAnimal: favoriteAnimal));
     })
           ..onError((error) {
             emit(
-              FavoritesFirebaseState(
-                favoriteAnimal: const [],
-                isLoading: false,
-                errorMessage: error.toString(),
-              ),
+              const FavoritesFirebaseError(
+                  message: 'Can\t load favorites from Firebase'),
             );
           });
   }

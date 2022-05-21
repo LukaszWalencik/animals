@@ -3,7 +3,6 @@ import 'package:animals/features/favorites_hive/widgets/animals_details_card_hiv
 import 'package:animals/features/favorites_hive/widgets/animals_details_card_hive_widgets/information_row_hive.dart';
 import 'package:animals/features/favorites_hive/widgets/animals_details_card_hive_widgets/name_box_hive.dart';
 import 'package:animals/models/animals_model.dart';
-import 'package:animals/presentation/app_typography.dart';
 import 'package:animals/presentation/colors.dart';
 import 'package:animals/presentation/dimens.dart';
 import 'package:animals/presentation/radius.dart';
