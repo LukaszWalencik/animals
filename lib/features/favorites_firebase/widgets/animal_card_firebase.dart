@@ -19,45 +19,74 @@ class AnimalCardFirebase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.listElementBlack,
-        borderRadius: const BorderRadius.all(Radius.circular(AppRadius.ms)),
-        border: Border.all(
-          width: 3,
-          color: AppColors.black,
-          style: BorderStyle.solid,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppDimens.s),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Image.network(
-              animalModel[index].imageLink,
-              width: 150,
-              height: 150,
+    return Padding(
+      padding: const EdgeInsets.all(AppDimens.s),
+      child: Dismissible(
+        key: Key(animalModel[index].id),
+        background: Container(
+          padding: EdgeInsets.only(right: AppDimens.l),
+          alignment: Alignment.centerRight,
+          decoration: BoxDecoration(
+            color: AppColors.errorColor,
+            borderRadius: const BorderRadius.all(Radius.circular(AppRadius.ms)),
+            border: Border.all(
+              width: 3,
+              color: AppColors.black,
+              style: BorderStyle.solid,
             ),
-            Expanded(
-              child: Column(
-                children: [
-                  // const Text('Name:',
-                  //     style: AppTypography.h2),
-                  Text(animalModel[index].name,
-                      textAlign: TextAlign.center, style: AppTypography.h2),
-                  IconButton(
-                      color: AppColors.errorColor,
-                      onPressed: () {
-                        context
-                            .read<FavoritesFirebaseCubit>()
-                            .delete(id: animalModel[index].id);
-                      },
-                      icon: const Icon(Icons.delete))
-                ],
-              ),
-            )
-          ],
+          ),
+          child: Icon(
+            Icons.delete,
+            color: AppColors.white,
+          ),
+        ),
+        direction: DismissDirection.endToStart,
+        onDismissed: ((direction) {
+          context
+              .read<FavoritesFirebaseCubit>()
+              .delete(id: animalModel[index].id);
+        }),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.listElementBlack,
+            borderRadius: const BorderRadius.all(Radius.circular(AppRadius.ms)),
+            border: Border.all(
+              width: 3,
+              color: AppColors.black,
+              style: BorderStyle.solid,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(AppDimens.s),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Image.network(
+                  animalModel[index].imageLink,
+                  width: 150,
+                  height: 150,
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      // const Text('Name:',
+                      //     style: AppTypography.h2),
+                      Text(animalModel[index].name,
+                          textAlign: TextAlign.center, style: AppTypography.h2),
+                      IconButton(
+                          color: AppColors.errorColor,
+                          onPressed: () {
+                            context
+                                .read<FavoritesFirebaseCubit>()
+                                .delete(id: animalModel[index].id);
+                          },
+                          icon: const Icon(Icons.delete))
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );

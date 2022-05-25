@@ -21,51 +21,54 @@ class AnimalsCard extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.listElementBlack,
-        borderRadius: const BorderRadius.all(Radius.circular(AppRadius.ms)),
-        border: Border.all(
-          width: 3,
-          color: AppColors.black,
-          style: BorderStyle.solid,
+    return Padding(
+      padding: const EdgeInsets.all(AppDimens.s),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.listElementBlack,
+          borderRadius: const BorderRadius.all(Radius.circular(AppRadius.ms)),
+          border: Border.all(
+            width: 3,
+            color: AppColors.black,
+            style: BorderStyle.solid,
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppDimens.s),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Image.network(
-              animalModel[index].imageLink,
-              width: 150,
-              height: 150,
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  // const Text('Name:',
-                  //     style: AppTypography.h2),
-                  Text(animalModel[index].name,
-                      textAlign: TextAlign.center, style: AppTypography.h2),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Favorite(
-                        animalModel: animalModel,
-                        index: index,
-                      ),
-                      Star(
-                        animalBox: animalBox,
-                        animalModel: animalModel,
-                        index: index,
-                      )
-                    ],
-                  )
-                ],
+        child: Padding(
+          padding: const EdgeInsets.all(AppDimens.s),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image.network(
+                animalModel[index].imageLink,
+                width: 150,
+                height: 150,
               ),
-            )
-          ],
+              Expanded(
+                child: Column(
+                  children: [
+                    // const Text('Name:',
+                    //     style: AppTypography.h2),
+                    Text(animalModel[index].name,
+                        textAlign: TextAlign.center, style: AppTypography.h2),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Favorite(
+                          animalModel: animalModel,
+                          index: index,
+                        ),
+                        Star(
+                          animalBox: animalBox,
+                          animalModel: animalModel,
+                          index: index,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
