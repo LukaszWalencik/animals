@@ -1,5 +1,7 @@
+import 'package:animals/features/favorites_firebase/cubit/favoritesfirebase_cubit.dart';
 import 'package:animals/features/list_page/cubit/animals_cubit.dart';
 import 'package:animals/models/animals_model.dart';
+import 'package:animals/presentation/colors.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +23,13 @@ class Favorite extends StatelessWidget {
       // iconDisabledColor: Colors.white,
       valueChanged: (favorite) {
         if (favorite == true) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: AppColors.success,
+              content: Text('Successful add this animal to firebase favorites'),
+            ),
+          );
+
           context.read<AnimalsCubit>().add(
                 animalId: animalModel[index].id,
                 name: animalModel[index].name,
