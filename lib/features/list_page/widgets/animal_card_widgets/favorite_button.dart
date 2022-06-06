@@ -1,4 +1,3 @@
-import 'package:animals/features/favorites_firebase/cubit/favoritesfirebase_cubit.dart';
 import 'package:animals/features/list_page/cubit/animals_cubit.dart';
 import 'package:animals/models/animals_model.dart';
 import 'package:animals/presentation/colors.dart';

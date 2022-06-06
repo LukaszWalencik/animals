@@ -1,13 +1,8 @@
 import 'package:animals/features/favorites_firebase/cubit/favoritesfirebase_cubit.dart';
 import 'package:animals/features/favorites_firebase/cubit/favoritesfirebase_state.dart';
-import 'package:animals/features/favorites_firebase/widgets/animal_card_firebase.dart';
-import 'package:animals/features/favorites_firebase/widgets/animal_details_card_firebase.dart';
 import 'package:animals/features/favorites_firebase/widgets/favorites_firebase_loading_screen.dart';
 import 'package:animals/features/favorites_firebase/widgets/favorites_firebase_success_screen.dart';
-import 'package:animals/models/firebase_animals_model.dart';
-import 'package:animals/presentation/app_typography.dart';
 import 'package:animals/presentation/colors.dart';
-import 'package:animals/presentation/dimens.dart';
 import 'package:animals/repository/favorite_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

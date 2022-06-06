@@ -48,6 +48,42 @@ class AnimalCardHive extends StatelessWidget {
                     IconButton(
                         color: AppColors.errorColor,
                         onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  elevation: 1,
+                                  title: const Text('Are you sure to delete?'),
+                                  content: const Text(
+                                      'Do you realy want to remove this favorite animal?'),
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop(true);
+                                          },
+                                          child: const Text('Yes'),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: AppColors.mainColor,
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop(false);
+                                          },
+                                          child: const Text('No'),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: AppColors.mainColor,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                );
+                              });
                           context.read<AnimalsCubit>().deleteFromHive(index);
                         },
                         icon: const Icon(Icons.delete))

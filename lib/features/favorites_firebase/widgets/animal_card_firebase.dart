@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:animals/features/favorites_firebase/cubit/favoritesfirebase_cubit.dart';
 import 'package:animals/models/firebase_animals_model.dart';
 import 'package:animals/presentation/app_typography.dart';
@@ -22,9 +24,46 @@ class AnimalCardFirebase extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(AppDimens.s),
       child: Dismissible(
+        confirmDismiss: (direction) {
+          return showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  elevation: 1,
+                  title: const Text('Are you sure to delete?'),
+                  content: const Text(
+                      'Do you realy want to remove this favorite animal?'),
+                  actions: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(true);
+                          },
+                          child: const Text('Yes'),
+                          style: ElevatedButton.styleFrom(
+                            primary: AppColors.mainColor,
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(false);
+                          },
+                          child: const Text('No'),
+                          style: ElevatedButton.styleFrom(
+                            primary: AppColors.mainColor,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                );
+              });
+        },
         key: Key(animalModel[index].id),
         background: Container(
-          padding: EdgeInsets.only(right: AppDimens.l),
+          padding: const EdgeInsets.only(right: AppDimens.l),
           alignment: Alignment.centerRight,
           decoration: BoxDecoration(
             color: AppColors.errorColor,
@@ -35,7 +74,7 @@ class AnimalCardFirebase extends StatelessWidget {
               style: BorderStyle.solid,
             ),
           ),
-          child: Icon(
+          child: const Icon(
             Icons.delete,
             color: AppColors.white,
           ),
